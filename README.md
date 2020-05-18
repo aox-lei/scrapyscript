@@ -19,7 +19,7 @@ run Scrapy from a Celery job.
 # Install
 
 ```python
-pip install scrapyscript
+pip install scrapy-script
 ```
 
 # Example
@@ -27,7 +27,7 @@ pip install scrapyscript
 Let's create a spider that retrieves the title attribute from two popular websites.
 
 ``` python
-from scrapyscript import Job, Processor
+from scrapy-script import Job, Processor
 from scrapy.spiders import Spider
 from scrapy import Request
 import json
@@ -50,31 +50,24 @@ githubJob = Job(PythonSpider, url='http://www.github.com')
 pythonJob = Job(PythonSpider, url='http://www.python.org')
 
 # Create a Processor, optionally passing in a Scrapy Settings object.
-processor = Processor(settings=None)
+processor = Processor(settings=None, item_scraped=True)
 
 # Start the reactor, and block until all spiders complete.
-data = processor.run([githubJob, pythonJob])
-
+processor.run([githubJob, pythonJob])
+data = processor.data()
+count = processor.count()
 # Print the consolidated results
 print(json.dumps(data, indent=4))
 ```
 
 ``` json
-[
-    {
-        "title": [
-            "Welcome to Python.org"
-        ],
-        "url": "https://www.python.org/"
-    },
-    {
-        "title": [
-            "The world's leading software development platform \u00b7 GitHub",
-            "1clr-code-hosting"
-        ],
-        "url": "https://github.com/"
-    }
-]
+{
+    "ccidcom": [
+        {
+            "title": "517寄语 | 工信部副部长陈肇雄：ICT促进持续发展 造福人类社会 "
+        }
+    ]
+}
 ```
 
 # Spider Output Types

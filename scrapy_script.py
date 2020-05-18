@@ -61,7 +61,7 @@ class Processor(Process):
             self.items[spider.name] = []
             self.items_count[spider.name] = 0
         if self.item_scraped is True:
-            self.items[spider.name].append(item)
+            self.items[spider.name].append(dict(item))
 
         self.items_count[spider.name] += 1
 
