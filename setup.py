@@ -13,7 +13,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 setup(
-    name='scrapyscript',
+    name='scrapy-script',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -24,11 +24,11 @@ setup(
     long_description='scrapyscript allows you to invoke one or more spiders from a script, have them all run in parallel, and get the results back as a single list.  No scrapy project, no boilerplate, no hassle.',
 
     # The project's main homepage.
-    url='https://github.com/jschnurr/scrapyscript',
+    url='https://github.com/aox-lei/scrapyscript',
 
     # Author details
-    author='Jeff Schnurr',
-    author_email='jschnurr@gmail.com',
+    author='Aox lei',
+    author_email='2387813033@qq.com',
 
     # Choose your license
     license='MIT',
@@ -59,8 +59,8 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['Scrapy==1.4.0',
-                      'billiard==3.5.0.2',
+    install_requires=['Scrapy>=1.4.0',
+                      'billiard>=3.5.0.2',
     ],
 
     # If there are data files included in your packages that need to be

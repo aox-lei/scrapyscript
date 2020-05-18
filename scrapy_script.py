@@ -40,7 +40,7 @@ class Processor(Process):
     Blocks until all have finished.
     '''
 
-    def __init__(self, settings=None):
+    def __init__(self, settings=None, item_scraped=True):
         '''
         Parms:
           settings (scrapy.settings.Settings) - settings to apply.  Defaults
@@ -49,12 +49,21 @@ class Processor(Process):
         kwargs = {'ctx': __import__('billiard.synchronize')}
 
         self.results = Queue(**kwargs)
-        self.items = []
+        self.counts = Queue(**kwargs)
+        self.items = {}
+        self.items_count = {}
         self.settings = settings or Settings()
+        self.item_scraped = item_scraped
         dispatcher.connect(self._item_passed, signals.item_passed)
 
-    def _item_passed(self, item):
-        self.items.append(item)
+    def _item_passed(self, item, response, spider):
+        if spider.name not in self.items.keys():
+            self.items[spider.name] = []
+            self.items_count[spider.name] = 0
+        if self.item_scraped is True:
+            self.items[spider.name].append(item)
+
+        self.items_count[spider.name] += 1
 
     def _crawl(self, requests):
         '''
@@ -71,6 +80,7 @@ class Processor(Process):
         self.crawler.start()
         self.crawler.stop()
         self.results.put(self.items)
+        self.counts.put(self.items_count)
 
     def run(self, jobs):
         '''Start the Scrapy engine, and execute all jobs.  Return consolidated results
@@ -91,8 +101,12 @@ class Processor(Process):
         p.join()
         p.terminate()
 
+    def data(self):
         return self.results.get()
+
+    def count(self):
+        return self.counts.get()
 
     def validate(self, jobs):
         if not all([isinstance(x, Job) for x in jobs]):
-            raise ScrapyScriptException('scrapyscript requires Job objects.')
+            raise ScrapyScriptException('scrapy-script requires Job objects.')
