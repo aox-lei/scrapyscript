@@ -1,7 +1,7 @@
 ![Travis](https://travis-ci.org/jschnurr/scrapyscript.svg?branch=master)
 
 # Overview
-
+modified from https://github.com/jschnurr/scrapyscript
 Scrapyscript provides a minimalist interface for invoking Scrapy directly
 from your code. Define Jobs that include your spider and any object
 you would like to pass to the running spider, and then pass them to an
@@ -55,9 +55,11 @@ processor = Processor(settings=None, item_scraped=True)
 # Start the reactor, and block until all spiders complete.
 processor.run([githubJob, pythonJob])
 data = processor.data()
+# get crawl count
 count = processor.count()
 # Print the consolidated results
 print(json.dumps(data, indent=4))
+
 ```
 
 ``` json
@@ -128,13 +130,6 @@ Scrapyscript spawns a subprocess to support the Twisted reactor. Billiard
 provides a fork of the multiprocessing library that supports Celery. This
 allows you to schedule scrapy spiders to run as Celery tasks.
 
-# Tests
-
-Run all tests:
-
-```bash
-tox
-```
 
 # Contributing
 
