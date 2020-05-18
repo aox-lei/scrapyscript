@@ -1,0 +1,16 @@
+Metadata-Version: 1.1
+Name: scrapy-script
+Version: 1.0.0
+Summary: Run a Scrapy spider programmatically from a script or a Celery task - no project required.
+Home-page: https://github.com/aox-lei/scrapyscript
+Author: Aox lei
+Author-email: 2387813033@qq.com
+License: MIT
+Description: scrapyscript allows you to invoke one or more spiders from a script, have them all run in parallel, and get the results back as a single list.  No scrapy project, no boilerplate, no hassle.
+Keywords: scrapy
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Framework :: Scrapy
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
